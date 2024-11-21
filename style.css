@@ -144,7 +144,7 @@ footer {
 .chat-box {
     position: fixed;
     bottom: 80px;
-    right: -400px; /* Hidden initially */
+    right: -350px;
     width: 300px;
     background-color: white;
     border: 1px solid #ddd;
@@ -152,8 +152,9 @@ footer {
     padding: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: right 0.3s ease-in-out;
+    z-index: 2000;
 }
 
 .chat-box.show {
-    right: 20px; /* Slides in when active */
+    right: 20px;
 }
