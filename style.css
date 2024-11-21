@@ -1,24 +1,20 @@
 /* General Styles */
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
-    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
     color: #333;
 }
 
-/* Header Section */
 header {
     background-color: #004080;
     color: white;
-    padding: 20px 0;
+    padding: 10px 20px;
 }
 
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
 }
 
 .logo {
@@ -31,101 +27,94 @@ header {
     display: flex;
     gap: 15px;
     margin: 0;
-    padding: 0;
-}
-
-.nav-links li {
-    display: inline;
 }
 
 .nav-links a {
-    color: white;
     text-decoration: none;
-    font-size: 16px;
+    color: white;
+    font-size: 14px;
 }
 
-.nav-links .sign-in {
-    background-color: #0066cc;
-    padding: 5px 10px;
-    border-radius: 5px;
-}
-
-.nav-links .sign-in:hover {
-    background-color: #004080;
-}
-
-.hero {
-    text-align: center;
-    padding: 40px 20px;
-}
-
-.hero h1 {
-    font-size: 36px;
-    margin-bottom: 10px;
-}
-
-.hero p {
-    font-size: 18px;
-    margin-bottom: 20px;
-}
-
-.hero .cta-button {
-    padding: 10px 20px;
+.cta-button {
     background-color: #0066cc;
     color: white;
-    text-decoration: none;
-    font-size: 18px;
+    padding: 10px 15px;
     border-radius: 5px;
+    text-decoration: none;
 }
 
-.hero .cta-button:hover {
+.cta-button:hover {
+    background-color: #003366;
+}
+
+/* Chat Icon and Chat Box */
+.chat-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.chat-icon {
     background-color: #004080;
+    color: white;
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Main Content */
-.categories {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 40px 20px;
-}
-
-.category {
+.chat-box {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 300px;
     background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: none; /* Initially hidden */
 }
 
-.category h2 {
+.chat-box h3 {
+    margin-top: 0;
+    font-size: 18px;
     color: #004080;
-    font-size: 20px;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
     margin-bottom: 10px;
-}
-
-.category p {
-    font-size: 16px;
-    margin-bottom: 20px;
-}
-
-.category .category-link {
-    text-decoration: none;
-    color: white;
-    background-color: #0066cc;
-    padding: 10px 20px;
+    border: 1px solid #ddd;
     border-radius: 5px;
 }
 
-.category .category-link:hover {
-    background-color: #004080;
-}
-
-/* Footer Section */
-footer {
+button {
     background-color: #004080;
     color: white;
-    text-align: center;
-    padding: 10px 0;
-    margin-top: 40px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #003366;
+}
+
+#agent-response {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    font-size: 14px;
 }

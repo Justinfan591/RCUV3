@@ -61,16 +61,6 @@
                 <a href="#" class="category-link">Learn More</a>
             </div>
         </section>
-
-        <!-- Chat Box Section -->
-        <section class="chat-section">
-            <h2>Ask Our AI Assistant</h2>
-            <div class="chat-box">
-                <textarea id="user-input" placeholder="Ask me anything..."></textarea>
-                <button onclick="sendMessage()">Send</button>
-            </div>
-            <div id="agent-response"></div>
-        </section>
     </main>
 
     <!-- Footer Section -->
@@ -78,7 +68,19 @@
         <p>&copy; 2024 Rotman Credit Union. All rights reserved.</p>
     </footer>
 
-    <!-- Link JavaScript File -->
+    <!-- Chat Box -->
+    <div class="chat-container">
+        <div class="chat-icon" onclick="toggleChat()">
+            💬
+        </div>
+        <div class="chat-box">
+            <h3>AI Assistant</h3>
+            <textarea id="user-input" placeholder="Ask me anything..."></textarea>
+            <button onclick="sendMessage()">Send</button>
+            <div id="agent-response"></div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
