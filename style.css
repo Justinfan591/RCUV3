@@ -68,12 +68,14 @@ header {
     margin: 0 0 20px;
 }
 
+/* Categories Section */
 .categories {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
     padding: 20px;
+    margin-top: 20px;
 }
 
 .category {
@@ -81,18 +83,19 @@ header {
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 10px;
-    width: 250px;
+    width: 300px;
     text-align: center;
 }
 
 .category h2 {
     font-size: 20px;
     color: #004080;
+    margin-bottom: 10px;
 }
 
 .category p {
     font-size: 14px;
-    margin: 10px 0 20px;
+    margin-bottom: 20px;
 }
 
 .category-link {
