@@ -1,7 +1,11 @@
 // Function to toggle chat box visibility
 function toggleChat() {
     const chatBox = document.querySelector('.chat-box');
-    chatBox.classList.toggle('show');
+    if (chatBox.style.display === 'none' || chatBox.style.display === '') {
+        chatBox.style.display = 'block';
+    } else {
+        chatBox.style.display = 'none';
+    }
 }
 
 // Example function to call the Copilot API
