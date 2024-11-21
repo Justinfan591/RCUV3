@@ -119,16 +119,19 @@ footer {
     color: white;
 }
 
-/* Chat Icon and Chat Box */
+
+
+
+
+/* Chat Container and Icon */
 .chat-container {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    z-index: 2000;
+    z-index: 1000;
 }
 
 .chat-icon {
-    z-index: 2001;
     background-color: #004080;
     color: white;
     font-size: 24px;
@@ -140,22 +143,80 @@ footer {
     justify-content: center;
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
 }
 
+.chat-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Chat Box */
 .chat-box {
     position: fixed;
     bottom: 80px;
-    right: -350px;
+    right: -350px; /* Start hidden outside viewport */
     width: 300px;
-    background-color: white;
-    border: 1px solid #ddd;
+    height: 400px;
+    background: white;
     border-radius: 10px;
-    padding: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 1001; /* Above other elements */
+    border: 1px solid #ddd;
     transition: right 0.3s ease-in-out;
-    z-index: 2000;
 }
 
 .chat-box.show {
-    right: 20px;
+    right: 20px; /* Slides into view */
+}
+
+/* Chat Box Header */
+.chat-box h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color: #004080;
+    text-align: center;
+}
+
+/* Chat Box Textarea */
+.chat-box textarea {
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    resize: none;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* Chat Box Send Button */
+.chat-box button {
+    background-color: #004080;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.chat-box button:hover {
+    background-color: #003366;
+}
+
+/* Chat Box Response */
+#agent-response {
+    font-size: 14px;
+    color: #333;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    height: auto;
 }
