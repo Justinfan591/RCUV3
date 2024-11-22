@@ -172,6 +172,11 @@ footer {
 .chat-box.show {
     right: 20px; /* Slides into view */
 }
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
 
 /* Chat Box Header */
 .chat-box h3 {
