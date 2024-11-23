@@ -75,50 +75,68 @@ async function initiateCall() {
     }
 }
 // Voice Input and Speech-to-Text Integration
+let isRecording = false; // Toggle state for recording
+let recognizer; // Global variable for recognizer
+
+// Start or stop voice input
 async function startVoiceInput() {
-    try {
-        // Check if the browser supports audio recording
-        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-            alert('Your browser does not support audio recording.');
-            return;
+    const recordButton = document.getElementById("record-btn");
+
+    if (!isRecording) {
+        try {
+            // Configure Speech SDK
+            const speechConfig = SpeechSDK.SpeechConfig.fromSubscription("YOUR_API_KEY", "YOUR_REGION");
+            speechConfig.speechRecognitionLanguage = "en-US"; // Set language
+
+            // Create an audio configuration for the microphone
+            const audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
+
+            // Initialize recognizer
+            recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig);
+
+            // Subscribe to events
+            recognizer.recognizing = (sender, event) => {
+                console.log(`Recognizing: ${event.result.text}`);
+            };
+
+            recognizer.recognized = (sender, event) => {
+                if (event.result.reason === SpeechSDK.ResultReason.RecognizedSpeech) {
+                    console.log(`Final result: ${event.result.text}`);
+                    document.getElementById("user-input").value = event.result.text; // Set the text in the input box
+                } else {
+                    console.log("Speech not recognized.");
+                }
+            };
+
+            recognizer.startContinuousRecognitionAsync(
+                () => {
+                    console.log("Recognition started.");
+                    recordButton.textContent = "Stop Recording";
+                    isRecording = true;
+                },
+                (err) => {
+                    console.error("Error starting recognition:", err);
+                }
+            );
+        } catch (error) {
+            console.error("Error accessing microphone or initializing recognition:", error);
+            alert("Failed to start voice input. Please check your microphone permissions.");
         }
-
-        // Request microphone access
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        const mediaRecorder = new MediaRecorder(stream);
-        const audioChunks = [];
-
-        // Gather recorded audio data
-        mediaRecorder.ondataavailable = (event) => {
-            audioChunks.push(event.data);
-        };
-
-        // Once recording stops, process the audio
-        mediaRecorder.onstop = async () => {
-            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-
-            // Display processing feedback
-            const inputBox = document.getElementById('user-input');
-            inputBox.value = "Processing your voice...";
-
-            // Send the audio to the Speech-to-Text API
-            const transcription = await transcribeAudio(audioBlob);
-
-            // Update the input box with the transcribed text
-            inputBox.value = transcription;
-
-            // Automatically send the transcription to the AI agent
-            sendMessage(); // Call the existing sendMessage function to send the input
-        };
-
-        // Start recording for 5 seconds
-        mediaRecorder.start();
-        setTimeout(() => mediaRecorder.stop(), 5000); // Stop recording after 5 seconds
-    } catch (error) {
-        console.error('Error accessing microphone:', error);
-        alert('Failed to access the microphone. Please check your permissions.');
+    } else {
+        // Stop recognition
+        recognizer.stopContinuousRecognitionAsync(
+            () => {
+                console.log("Recognition stopped.");
+                recordButton.textContent = "🎤 Speak";
+                isRecording = false;
+            },
+            (err) => {
+                console.error("Error stopping recognition:", err);
+            }
+        );
     }
 }
+
 
 // Function to send audio to a Speech-to-Text API
 async function transcribeAudio(audioBlob) {
