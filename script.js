@@ -74,3 +74,70 @@ async function initiateCall() {
         alert('An error occurred while initiating the call.');
     }
 }
+// Voice Input and Speech-to-Text Integration
+async function startVoiceInput() {
+    try {
+        // Check if the browser supports audio recording
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            alert('Your browser does not support audio recording.');
+            return;
+        }
+
+        // Request microphone access
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const mediaRecorder = new MediaRecorder(stream);
+        const audioChunks = [];
+
+        // Gather recorded audio data
+        mediaRecorder.ondataavailable = (event) => {
+            audioChunks.push(event.data);
+        };
+
+        // Once recording stops, process the audio
+        mediaRecorder.onstop = async () => {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+
+            document.getElementById('transcribed-text').innerText = 'Processing your voice...';
+
+            // Send the audio to the Speech-to-Text API
+            const transcription = await transcribeAudio(audioBlob);
+            document.getElementById('transcribed-text').innerText = `You said: "${transcription}"`;
+
+            // Send the transcription to the Copilot chat iframe
+            const iframe = document.querySelector('iframe');
+            iframe.contentWindow.postMessage({ userInput: transcription }, '*');
+        };
+
+        // Start recording for 5 seconds
+        mediaRecorder.start();
+        setTimeout(() => mediaRecorder.stop(), 5000); // Stop recording after 5 seconds
+    } catch (error) {
+        console.error('Error accessing microphone:', error);
+        alert('Failed to access the microphone. Please check your permissions.');
+    }
+}
+
+// Function to send audio to a Speech-to-Text API
+async function transcribeAudio(audioBlob) {
+    try {
+        const response = await fetch("https://<your-speech-to-text-api-endpoint>", {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer YOUR_API_KEY", // Add your Speech-to-Text API Key
+                "Content-Type": "audio/wav",
+            },
+            body: audioBlob,
+        });
+
+        if (!response.ok) {
+            console.error("Speech-to-Text API Error:", response.status);
+            return "Sorry, I couldn't understand your speech.";
+        }
+
+        const data = await response.json();
+        return data.DisplayText || data.transcription; // Adjust based on API response format
+    } catch (error) {
+        console.error("Error transcribing audio:", error);
+        return "An error occurred while processing your speech.";
+    }
+}

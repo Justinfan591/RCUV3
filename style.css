@@ -242,3 +242,28 @@ iframe {
 .call-agent-button:hover {
     background-color: #218838; /* Darker green on hover */
 }
+.voice-demo {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#record-btn {
+    background-color: #004080;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#record-btn:hover {
+    background-color: #003366;
+}
+
+#transcribed-text {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+}
