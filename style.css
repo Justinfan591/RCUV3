@@ -225,26 +225,14 @@ iframe {
     border: 1px solid #ddd;
     height: auto;
 }
-/* Call Agent Button */
-.call-agent-button {
-    background-color: #28a745; /* Green background */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    font-size: 16px;
-    cursor: pointer;
-    width: 100%; /* Fit the width of the chat box */
-    margin-top: 10px;
-    transition: background-color 0.3s ease;
-}
 
-.call-agent-button:hover {
-    background-color: #218838; /* Darker green on hover */
-}
-.voice-demo {
-    text-align: center;
-    margin: 20px 0;
+/* for sending voice message*/
+#user-input {
+    width: calc(100% - 80px);
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
 #record-btn {
@@ -252,8 +240,7 @@ iframe {
     color: white;
     border: none;
     border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -262,8 +249,3 @@ iframe {
     background-color: #003366;
 }
 
-#transcribed-text {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #333;
-}
