@@ -48,3 +48,29 @@ async function sendMessage() {
     const response = await callCopilotAPI(userInput);
     document.getElementById("agent-response").innerText = response;
 }
+async function initiateCall() {
+    try {
+        const response = await fetch('https://<your-backend-domain>/start-call', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                phoneNumber: '+<user-phone-number>', // Replace with dynamic input if required
+            }),
+        });
+
+        if (!response.ok) {
+            console.error('Error initiating call:', response.statusText);
+            alert('Failed to initiate call. Please try again later.');
+            return;
+        }
+
+        const data = await response.json();
+        console.log('Call initiated:', data);
+        alert('Call has been initiated! Please wait for a response.');
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while initiating the call.');
+    }
+}
