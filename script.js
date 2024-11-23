@@ -97,15 +97,18 @@ async function startVoiceInput() {
         mediaRecorder.onstop = async () => {
             const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
 
-            document.getElementById('transcribed-text').innerText = 'Processing your voice...';
+            // Display processing feedback
+            const inputBox = document.getElementById('user-input');
+            inputBox.value = "Processing your voice...";
 
             // Send the audio to the Speech-to-Text API
             const transcription = await transcribeAudio(audioBlob);
-            document.getElementById('transcribed-text').innerText = `You said: "${transcription}"`;
 
-            // Send the transcription to the Copilot chat iframe
-            const iframe = document.querySelector('iframe');
-            iframe.contentWindow.postMessage({ userInput: transcription }, '*');
+            // Update the input box with the transcribed text
+            inputBox.value = transcription;
+
+            // Automatically send the transcription to the AI agent
+            sendMessage(); // Call the existing sendMessage function to send the input
         };
 
         // Start recording for 5 seconds
@@ -141,3 +144,4 @@ async function transcribeAudio(audioBlob) {
         return "An error occurred while processing your speech.";
     }
 }
+
