@@ -48,32 +48,7 @@ async function sendMessage() {
     const response = await callCopilotAPI(userInput);
     document.getElementById("agent-response").innerText = response;
 }
-async function initiateCall() {
-    try {
-        const response = await fetch('https://<your-backend-domain>/start-call', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                phoneNumber: '+<user-phone-number>', // Replace with dynamic input if required
-            }),
-        });
 
-        if (!response.ok) {
-            console.error('Error initiating call:', response.statusText);
-            alert('Failed to initiate call. Please try again later.');
-            return;
-        }
-
-        const data = await response.json();
-        console.log('Call initiated:', data);
-        alert('Call has been initiated! Please wait for a response.');
-    } catch (error) {
-        console.error('Error:', error);
-        alert('An error occurred while initiating the call.');
-    }
-}
 // Voice Input and Speech-to-Text Integration
 let isRecording = false; // Toggle state for recording
 let recognizer; // Global variable for recognizer
@@ -85,7 +60,7 @@ async function startVoiceInput() {
     if (!isRecording) {
         try {
             // Configure Speech SDK
-            const speechConfig = SpeechSDK.SpeechConfig.fromSubscription("YOUR_API_KEY", "YOUR_REGION");
+            const speechConfig = SpeechSDK.SpeechConfig.fromSubscription("AGgaAzCEKu7sXD8T7HV1pKT1OJlcinHF8lxdmIxj7wm1G8sHTK0bJQQJ99AKACYeBjFXJ3w3AAAYACOGrn8f", "eastus");
             speechConfig.speechRecognitionLanguage = "en-US"; // Set language
 
             // Create an audio configuration for the microphone
@@ -141,10 +116,10 @@ async function startVoiceInput() {
 // Function to send audio to a Speech-to-Text API
 async function transcribeAudio(audioBlob) {
     try {
-        const response = await fetch("https://<your-speech-to-text-api-endpoint>", {
+        const response = await fetch("https://eastus.api.cognitive.microsoft.com/", {
             method: "POST",
             headers: {
-                "Authorization": "Bearer YOUR_API_KEY", // Add your Speech-to-Text API Key
+                "Authorization": "AGgaAzCEKu7sXD8T7HV1pKT1OJlcinHF8lxdmIxj7wm1G8sHTK0bJQQJ99AKACYeBjFXJ3w3AAAYACOGrn8f", // Add your Speech-to-Text API Key
                 "Content-Type": "audio/wav",
             },
             body: audioBlob,
