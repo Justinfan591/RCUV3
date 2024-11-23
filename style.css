@@ -225,3 +225,20 @@ iframe {
     border: 1px solid #ddd;
     height: auto;
 }
+/* Call Agent Button */
+.call-agent-button {
+    background-color: #28a745; /* Green background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%; /* Fit the width of the chat box */
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.call-agent-button:hover {
+    background-color: #218838; /* Darker green on hover */
+}
