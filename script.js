@@ -1,53 +1,70 @@
 // Function to toggle chat box visibility
 function toggleChat() {
-    const chatBox = document.querySelector('.chat-box');
-    const speechContainer = document.querySelector('.speech-container'); // Speech-to-text box
+    const chatBox = document.querySelector(".chat-box");
+    const speechContainer = document.querySelector(".speech-container");
 
-    console.log("Chat icon clicked!"); // Check if this logs in the console
-    if (chatBox.classList.contains('show')) {
-        chatBox.classList.remove('show');
-        speechContainer.classList.remove('show'); // Hide speech box
-        console.log("Chat box and speech box hidden.");
+    if (chatBox.classList.contains("show")) {
+        chatBox.classList.remove("show");
+        speechContainer.style.display = "none"; // Hide speech box
     } else {
-        chatBox.classList.add('show');
-        speechContainer.classList.add('show'); // Show speech box
-        console.log("Chat box and speech box visible.");
+        chatBox.classList.add("show");
+        speechContainer.style.display = "block"; // Show speech box
     }
 }
-function startVoiceInput() {
+
+async function startVoiceInput() {
     const recordButton = document.getElementById("record-btn");
-    const outputField = document.getElementById("speech-output");
+    const outputBox = document.getElementById("speech-output");
 
     if (!isRecording) {
         try {
-            const speechConfig = SpeechSDK.SpeechConfig.fromSubscription("AGgaAzCEKu7sXD8T7HV1pKT1OJlcinHF8lxdmIxj7wm1G8sHTK0bJQQJ99AKACYeBjFXJ3w3AAAYACOGrn8f", "eastus");
+            // Configure Azure Speech SDK
+            const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(
+                "AGgaAzCEKu7sXD8T7HV1pKT1OJlcinHF8lxdmIxj7wm1G8sHTK0bJQQJ99AKACYeBjFXJ3w3AAAYACOGrn8f", // Replace with your Azure Speech API Key
+                "eastus" // Replace with your Azure region
+            );
             speechConfig.speechRecognitionLanguage = "en-US";
 
             const audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
             recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig);
 
-            recognizer.recognizing = (sender, event) => {
-                outputField.value = event.result.text;
-            };
-
+            // Event listener for recognized speech
             recognizer.recognized = (sender, event) => {
                 if (event.result.reason === SpeechSDK.ResultReason.RecognizedSpeech) {
-                    outputField.value = event.result.text;
+                    const transcribedText = event.result.text;
+                    console.log(`Recognized: ${transcribedText}`);
+                    outputBox.value = transcribedText; // Show in text area
                 }
             };
 
-            recognizer.startContinuousRecognitionAsync(() => {
-                recordButton.textContent = "Stop Recording";
-                isRecording = true;
-            });
+            // Start recognition
+            recognizer.startContinuousRecognitionAsync(
+                () => {
+                    console.log("Speech recognition started.");
+                    recordButton.textContent = "Stop Recording";
+                    isRecording = true;
+                },
+                (err) => {
+                    console.error("Error starting recognition:", err);
+                    alert("Error starting speech recognition. Please try again.");
+                }
+            );
         } catch (error) {
-            console.error("Speech SDK Initialization Error:", error);
+            console.error("Error initializing speech recognition:", error);
+            alert("Failed to start speech input. Check microphone permissions.");
         }
     } else {
-        recognizer.stopContinuousRecognitionAsync(() => {
-            recordButton.textContent = "🎤 Speak";
-            isRecording = false;
-        });
+        // Stop recognition
+        recognizer.stopContinuousRecognitionAsync(
+            () => {
+                console.log("Speech recognition stopped.");
+                recordButton.textContent = "🎤 Speak";
+                isRecording = false;
+            },
+            (err) => {
+                console.error("Error stopping recognition:", err);
+            }
+        );
     }
 }
 
