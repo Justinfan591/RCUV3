@@ -81,10 +81,16 @@
             frameborder="0"
             style="width: 100%; height: 100%; border: none;">
             </iframe>
-    <button id="record-btn" onclick="startVoiceInput()">🎤 Speak</button>
-    <script src="https://cdn.jsdelivr.net/npm/microsoft-cognitiveservices-speech-sdk/distrib/browser/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
-</div>
-
+        </div>
+    </div>
+        <!-- Speech-to-Text Box -->
+        <div class="speech-container" style="display: none;">
+            <div class="speech-box">
+                <h3>Voice Input</h3>
+                <textarea id="speech-output" placeholder="Transcribed text will appear here" readonly></textarea>
+                <button id="record-btn" onclick="startVoiceInput()">🎤 Speak</button>
+                <button id="copy-btn" onclick="copyToChatbox()">Copy to Chat</button>
+            </div>
         </div>
     </div>
 

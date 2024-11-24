@@ -1,13 +1,17 @@
 // Function to toggle chat box visibility
 function toggleChat() {
     const chatBox = document.querySelector('.chat-box');
+    const speechContainer = document.querySelector('.speech-container'); // Speech-to-text box
+
     console.log("Chat icon clicked!"); // Check if this logs in the console
     if (chatBox.classList.contains('show')) {
         chatBox.classList.remove('show');
-        console.log("Chat box hidden.");
+        speechContainer.classList.remove('show'); // Hide speech box
+        console.log("Chat box and speech box hidden.");
     } else {
         chatBox.classList.add('show');
-        console.log("Chat box visible.");
+        speechContainer.classList.add('show'); // Show speech box
+        console.log("Chat box and speech box visible.");
     }
 }
 
