@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RCU Personal Banking</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/microsoft-cognitiveservices-speech-sdk/distrib/browser/microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
 </head>
 <body>
     <!-- Header Section -->
@@ -69,32 +70,28 @@
     </footer>
 
     <!-- Chat Box -->
-<div class="chat-container">
-    <!-- Chat Icon -->
-    <div class="chat-icon" onclick="toggleChat()">
-        💬
-    </div>
+    <div class="chat-container">
+        <div class="chat-icon" onclick="toggleChat()">
+            💬
+        </div>
+        <div class="chat-box">
+            <h3>AI Assistant</h3>
+            <iframe
+                src="https://copilotstudio.microsoft.com/environments/Default-c17a4b79-c544-4144-b4ce-f07f1cfe15df/bots/cr184_testAgent2/webchat?__version__=2"
+                frameborder="0"
+                style="width: 100%; height: 100%; border: none;">
+            </iframe>
+        </div>
 
-    <!-- Chat Box -->
-    <div class="chat-box">
-        <h3>AI Assistant</h3>
-        <iframe
-            src="https://copilotstudio.microsoft.com/environments/Default-c17a4b79-c544-4144-b4ce-f07f1cfe15df/bots/cr184_testAgent2/webchat?__version__=2"
-            frameborder="0"
-            style="width: 100%; height: 100%; border: none;">
-        </iframe>
-    </div>
-
-    <!-- Floating Speech-to-Text Box -->
-    <div class="speech-container">
-        <div class="speech-box">
-            <h3>Voice Input</h3>
-            <textarea id="speech-output" placeholder="Transcribed text will appear here" readonly></textarea>
-            <button id="record-btn" onclick="startVoiceInput()">🎤 Speak</button>
-            <button id="copy-btn" onclick="copyToChatbox()">Copy to Chat</button>
+        <!-- Floating Speech-to-Text Box -->
+        <div class="speech-container">
+            <div class="speech-box">
+                <h3>Voice Input</h3>
+                <textarea id="speech-output" placeholder="Transcribed text will appear here" readonly></textarea>
+                <button id="record-btn" onclick="startVoiceInput()">🎤 Speak</button>
+            </div>
         </div>
     </div>
-</div>
 
     <script src="script.js"></script>
 </body>
