@@ -149,10 +149,10 @@ footer {
 /* Chat Box */
 .chat-box {
     position: fixed;
-    bottom: 140px;
+    bottom: 150px;
     right: -350px; /* Start hidden outside viewport */
     width: 300px;
-    height: 400px;
+    height: 600px;
     background: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -238,3 +238,24 @@ footer {
 .speech-btn:hover {
     background-color: #004080;
 }
+.chat-content-wrapper {
+    position: relative; /* Enables fine control */
+    top: -20px; /* Adjust this value to move the chat agent upwards */
+    height: calc(100% - 20px); /* Keep height consistent after moving */
+}
+
+.chat-box {
+    height: 350px; /* Dynamically adjusts based on content */
+    max-height: 600px; /* Optional: Adds a limit to prevent content overflow */
+    padding-bottom: 20px; /* Prevents cutting off the bottom */
+    border: 1px solid #ddd; /* Ensures a visible boundary */
+    overflow-y: auto; /* Enables scrolling if necessary */
+}
+
+.chat-content-wrapper iframe {
+    width: 100%;
+    height: calc(100% - 10px); /* Adjust height dynamically, subtracting any padding or margins */
+    border: 1px solid #ddd; /* Optional: visible frame for iframe */
+    border-radius: 5px; /* Matches the box's rounded edges */
+}
+
