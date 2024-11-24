@@ -28,13 +28,14 @@ let recognizer; // Global variable for recognizer
 // Start or stop voice input
 async function startVoiceInput() {
     const recordButton = document.getElementById("record-btn");
-    const userInput = document.getElementById("user-input").value;
-    document.getElementById("user-input").value = event.result.text;
 
     if (!isRecording) {
         try {
             // Configure Speech SDK
-            const speechConfig = SpeechSDK.SpeechConfig.fromSubscription("AGgaAzCEKu7sXD8T7HV1pKT1OJlcinHF8lxdmIxj7wm1G8sHTK0bJQQJ99AKACYeBjFXJ3w3AAAYACOGrn8f", "eastus");
+            const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(
+                "AGgaAzCEKu7sXD8T7HV1pKT1OJlcinHF8lxdmIxj7wm1G8sHTK0bJQQJ99AKACYeBjFXJ3w3AAAYACOGrn8f", // Replace with your API key
+                "eastus" // Replace with your region
+            );
             speechConfig.speechRecognitionLanguage = "en-US"; // Set language
 
             // Create an audio configuration for the microphone
@@ -50,8 +51,11 @@ async function startVoiceInput() {
 
             recognizer.recognized = (sender, event) => {
                 if (event.result.reason === SpeechSDK.ResultReason.RecognizedSpeech) {
-                    console.log(`Final result: ${event.result.text}`);
-                    document.getElementById("user-input").value = event.result.text; // Set the text in the input box
+                    const transcribedText = event.result.text;
+                    console.log(`Final result: ${transcribedText}`);
+
+                    // Populate the recognized text into the Web Chat input field and send it
+                    sendMessageToCopilot(transcribedText);
                 } else {
                     console.log("Speech not recognized.");
                 }
@@ -86,6 +90,24 @@ async function startVoiceInput() {
     }
 }
 
+// Helper function to send message to Copilot Web Chat
+function sendMessageToCopilot(message) {
+    const iframe = document.querySelector("iframe"); // Target your iframe
+    const iframeDocument = iframe.contentDocument || iframe.contentWindow.document; // Access iframe's document
+
+    const inputField = iframeDocument.querySelector('input[aria-label="Type your message"]'); // Locate the input field
+    const sendButton = iframeDocument.querySelector('button[aria-label="Send"]'); // Locate the send button
+
+    if (inputField && sendButton) {
+        inputField.value = message; // Set the transcribed text
+        sendButton.click(); // Simulate click to send the message
+        console.log(`Sent message: ${message}`);
+    } else {
+        console.error("Failed to find Web Chat input field or send button.");
+    }
+}
+
+
 
 // Function to send audio to a Speech-to-Text API
 async function transcribeAudio(audioBlob) {
@@ -112,4 +134,18 @@ async function transcribeAudio(audioBlob) {
     }
 }
 
+function sendMessageToCopilot(message) {
+    const iframe = document.querySelector("iframe"); // Target your iframe
+    const iframeDocument = iframe.contentDocument || iframe.contentWindow.document; // Access iframe's document
+
+    const inputField = iframeDocument.querySelector('input[aria-label="Type your message"]'); // Locate the input field
+    const sendButton = iframeDocument.querySelector('button[aria-label="Send"]'); // Locate the send button
+
+    if (inputField && sendButton) {
+        inputField.value = message; // Set the transcribed text
+        sendButton.click(); // Simulate click to send the message
+    } else {
+        console.error("Failed to find Web Chat input field or send button.");
+    }
+}
 
