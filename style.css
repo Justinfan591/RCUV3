@@ -154,98 +154,63 @@ footer {
 .chat-box {
     position: fixed;
     bottom: 80px;
-    right: -350px; /* Start hidden outside viewport */
+    right: 20px;
     width: 300px;
     height: 400px;
     background: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    z-index: 1001; /* Above other elements */
+    display: none; /* Initially hidden */
     border: 1px solid #ddd;
-    transition: right 0.3s ease-in-out;
+    z-index: 1001;
 }
 
 .chat-box.show {
-    right: 20px; /* Slides into view */
-}
-iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
+    display: block;
 }
 
-/* Chat Box Header */
-.chat-box h3 {
-    margin: 0 0 10px 0;
-    font-size: 18px;
-    color: #004080;
-    text-align: center;
-}
-
-/* Chat Box Textarea */
-.chat-box textarea {
-    flex: 1;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 10px;
-    resize: none;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    margin-bottom: 10px;
-}
-
-/* Chat Box Send Button */
-.chat-box button {
-    background-color: #004080;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.chat-box button:hover {
-    background-color: #003366;
-}
-
-/* Chat Box Response */
-#agent-response {
-    font-size: 14px;
-    color: #333;
-    margin-top: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
+/* Speech-to-Text Box */
+.speech-container {
+    position: fixed;
+    bottom: 80px;
+    right: 340px; /* Left of the chat box */
+    width: 300px;
     height: auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    display: none; /* Initially hidden */
+    border: 1px solid #ddd;
+    z-index: 1001;
 }
 
-/* for sending voice message*/
-#user-input {
-    width: calc(100% - 80px);
+.speech-container.show {
+    display: block;
+}
+
+.speech-box textarea {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 10px;
     padding: 10px;
-    margin-right: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
 
-#record-btn {
+.speech-box button {
+    padding: 10px;
     background-color: #004080;
     color: white;
     border: none;
     border-radius: 5px;
-    padding: 10px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-#record-btn:hover {
+.speech-box button:hover {
     background-color: #003366;
 }
+
+
 

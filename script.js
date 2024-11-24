@@ -14,6 +14,42 @@ function toggleChat() {
         console.log("Chat box and speech box visible.");
     }
 }
+function startVoiceInput() {
+    const recordButton = document.getElementById("record-btn");
+    const outputField = document.getElementById("speech-output");
+
+    if (!isRecording) {
+        try {
+            const speechConfig = SpeechSDK.SpeechConfig.fromSubscription("AGgaAzCEKu7sXD8T7HV1pKT1OJlcinHF8lxdmIxj7wm1G8sHTK0bJQQJ99AKACYeBjFXJ3w3AAAYACOGrn8f", "eastus");
+            speechConfig.speechRecognitionLanguage = "en-US";
+
+            const audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
+            recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig);
+
+            recognizer.recognizing = (sender, event) => {
+                outputField.value = event.result.text;
+            };
+
+            recognizer.recognized = (sender, event) => {
+                if (event.result.reason === SpeechSDK.ResultReason.RecognizedSpeech) {
+                    outputField.value = event.result.text;
+                }
+            };
+
+            recognizer.startContinuousRecognitionAsync(() => {
+                recordButton.textContent = "Stop Recording";
+                isRecording = true;
+            });
+        } catch (error) {
+            console.error("Speech SDK Initialization Error:", error);
+        }
+    } else {
+        recognizer.stopContinuousRecognitionAsync(() => {
+            recordButton.textContent = "🎤 Speak";
+            isRecording = false;
+        });
+    }
+}
 
 // Handle sending messages
 async function sendMessage() {
