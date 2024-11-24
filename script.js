@@ -28,6 +28,8 @@ let recognizer; // Global variable for recognizer
 // Start or stop voice input
 async function startVoiceInput() {
     const recordButton = document.getElementById("record-btn");
+    const userInput = document.getElementById("user-input").value;
+    document.getElementById("user-input").value = event.result.text;
 
     if (!isRecording) {
         try {
