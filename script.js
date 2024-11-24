@@ -28,67 +28,72 @@ let recognizer; // Global variable for recognizer
 // Start or stop voice input
 async function startVoiceInput() {
     const recordButton = document.getElementById("record-btn");
+    const iframe = document.getElementById("chat-iframe"); // Target the iframe
+    let iframeDoc;
+
+    // Ensure iframe is loaded
+    try {
+        iframeDoc = iframe.contentWindow.document;
+    } catch (e) {
+        console.error("Cannot access iframe document:", e);
+        alert("Error accessing chatbox. Ensure it is correctly embedded.");
+        return;
+    }
 
     if (!isRecording) {
         try {
             // Configure Speech SDK
             const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(
-                "AGgaAzCEKu7sXD8T7HV1pKT1OJlcinHF8lxdmIxj7wm1G8sHTK0bJQQJ99AKACYeBjFXJ3w3AAAYACOGrn8f", // Replace with your API key
-                "eastus" // Replace with your region
+                "YOUR_API_KEY", // Replace with your Azure API Key
+                "YOUR_REGION" // Replace with your Azure region
             );
-            speechConfig.speechRecognitionLanguage = "en-US"; // Set language
+            speechConfig.speechRecognitionLanguage = "en-US";
 
-            // Create an audio configuration for the microphone
             const audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
-
-            // Initialize recognizer
             recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig);
-
-            // Subscribe to events
-            recognizer.recognizing = (sender, event) => {
-                console.log(`Recognizing: ${event.result.text}`);
-            };
 
             recognizer.recognized = (sender, event) => {
                 if (event.result.reason === SpeechSDK.ResultReason.RecognizedSpeech) {
                     const transcribedText = event.result.text;
-                    console.log(`Final result: ${transcribedText}`);
 
-                    // Populate the recognized text into the Web Chat input field and send it
-                    sendMessageToCopilot(transcribedText);
-                } else {
-                    console.log("Speech not recognized.");
+                    console.log(`Recognized: ${transcribedText}`);
+
+                    // Locate the input field in the iframe and set its value
+                    const chatInput = iframeDoc.querySelector("input[type='text']"); // Adjust selector if necessary
+                    if (chatInput) {
+                        chatInput.value = transcribedText; // Populate the input box
+                        console.log("Text added to input box");
+
+                        // Optionally, simulate the "send" button click
+                        const sendButton = iframeDoc.querySelector("button[type='submit']");
+                        if (sendButton) {
+                            sendButton.click();
+                            console.log("Message sent!");
+                        }
+                    } else {
+                        console.error("Chat input field not found.");
+                    }
                 }
             };
 
-            recognizer.startContinuousRecognitionAsync(
-                () => {
-                    console.log("Recognition started.");
-                    recordButton.textContent = "Stop Recording";
-                    isRecording = true;
-                },
-                (err) => {
-                    console.error("Error starting recognition:", err);
-                }
-            );
+            recognizer.startContinuousRecognitionAsync(() => {
+                console.log("Speech recognition started.");
+                recordButton.textContent = "Stop Recording";
+                isRecording = true;
+            });
         } catch (error) {
-            console.error("Error accessing microphone or initializing recognition:", error);
+            console.error("Error initializing speech recognition:", error);
             alert("Failed to start voice input. Please check your microphone permissions.");
         }
     } else {
-        // Stop recognition
-        recognizer.stopContinuousRecognitionAsync(
-            () => {
-                console.log("Recognition stopped.");
-                recordButton.textContent = "🎤 Speak";
-                isRecording = false;
-            },
-            (err) => {
-                console.error("Error stopping recognition:", err);
-            }
-        );
+        recognizer.stopContinuousRecognitionAsync(() => {
+            console.log("Speech recognition stopped.");
+            recordButton.textContent = "🎤 Speak";
+            isRecording = false;
+        });
     }
 }
+
 
 // Helper function to send message to Copilot Web Chat
 function sendMessageToCopilot(message) {
