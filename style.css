@@ -149,7 +149,7 @@ footer {
 /* Chat Box */
 .chat-box {
     position: fixed;
-    bottom: 150px;
+    bottom: 70px;
     right: -350px; /* Start hidden outside viewport */
     width: 300px;
     height: 600px;
@@ -245,7 +245,7 @@ footer {
 }
 
 .chat-box {
-    height: 350px; /* Dynamically adjusts based on content */
+    height: 400px; /* Dynamically adjusts based on content */
     max-height: 600px; /* Optional: Adds a limit to prevent content overflow */
     padding-bottom: 20px; /* Prevents cutting off the bottom */
     border: 1px solid #ddd; /* Ensures a visible boundary */
