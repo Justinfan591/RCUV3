@@ -81,7 +81,6 @@ function copyToClipboard() {
 
     outputBox.select();
     navigator.clipboard.writeText(outputBox.value).then(() => {
-        alert("Transcription copied to clipboard!");
     }).catch((err) => {
         console.error("Failed to copy text: ", err);
         alert("Failed to copy. Try selecting and copying manually.");
