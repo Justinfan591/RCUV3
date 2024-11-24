@@ -66,4 +66,23 @@ async function startVoiceInput() {
     }
 }
 
+// Copy transcription text to clipboard
+function copyToClipboard() {
+    const outputBox = document.getElementById("speech-output");
+    if (outputBox.value.trim() === "") {
+        alert("No text to copy! Please transcribe something first.");
+        return;
+    }
 
+    // Copy text to clipboard
+    outputBox.select();
+    outputBox.setSelectionRange(0, 99999); // For mobile compatibility
+
+    try {
+        navigator.clipboard.writeText(outputBox.value);
+        alert("Transcription copied to clipboard!");
+    } catch (err) {
+        console.error("Failed to copy text: ", err);
+        alert("Failed to copy. Try selecting and copying manually.");
+    }
+}

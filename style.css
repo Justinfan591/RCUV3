@@ -213,4 +213,26 @@ footer {
 }
 
 
+.speech-box button {
+    margin-right: 5px;
+    padding: 10px;
+    background-color: #004080;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.speech-box button:hover {
+    background-color: #003366;
+}
+
+#copy-btn {
+    background-color: #0066cc; /* Slightly different color for copy button */
+    margin-top: 5px;
+}
+
+#copy-btn:hover {
+    background-color: #004080;
+}
 
